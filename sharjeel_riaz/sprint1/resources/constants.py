@@ -1,0 +1,3 @@
+URL_MONITOR_NAMESPACE = "SharjWebHealth"
+URL_MONITOR_NAME_AVAILIBILITY = 'url_availibility'
+URL_MONITOR_NAME_LATENCY = 'url_latency'

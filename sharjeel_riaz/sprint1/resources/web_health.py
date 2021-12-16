@@ -1,11 +1,27 @@
 import urllib.request
 import datetime
+from cloudwatch_metrics import CloudWatchMetric
+import constants as constants
 
 def lambda_handler(events, context):
     values = dict()
     URL = "https://stackoverflow.com"
+    dimensions = [{'Name':'URL', 'Value':URL},
+                    {'Name':'Region', 'Value':'US'}]
+    cw = CloudWatchMetric()
+    
     avail = get_avail(URL)
+    cw.put_data(constants.URL_MONITOR_NAMESPACE,
+                constants.URL_MONITOR_NAME_AVAILIBILITY,
+                dimensions,
+                avail)
+    
     latency = get_latency(URL)
+    cw.put_data(constants.URL_MONITOR_NAMESPACE,
+                constants.URL_MONITOR_NAME_LATENCY,
+                dimensions,
+                latency)
+    
     values.update({'availibility':avail, 'latency':latency})
     return values
     
